@@ -1,0 +1,53 @@
+version: "3.8"
+
+volumes:
+  databases_volume:
+  maven-dependencies:
+
+networks:
+  workshop-network:
+
+services:
+  db:
+    container_name: workshop-databases
+    image: "postgres:alpine"
+    env_file: .env
+    networks:
+      - workshop-network
+    volumes:
+      - ./init-multiple-databases.sh:/docker-entrypoint-initdb.d/multiple-databases.sh
+      - databases_volume:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_MULTIPLE_DATABASES=products,promo
+    ports:
+      - "2222:5432"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.1'
+          memory: 512M
+
+  zookeeper:
+    image: confluentinc/cp-zookeeper:latest
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    ports:
+      - "22181:2181"
+
+  kafka:
+    image: confluentinc/cp-kafka:latest
+    depends_on:
+      - zookeeper
+    ports:
+      - "29092:29092"
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:29092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+

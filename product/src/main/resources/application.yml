@@ -1,0 +1,17 @@
+spring:
+  webflux:
+    base-path: /product
+  main:
+    web-application-type: reactive
+  r2dbc:
+    pool:
+      enabled: true
+    url: 'r2dbc:postgresql://localhost:2222/products'
+    username: 'user'
+    password: 'pass'
+  liquibase:
+    url: 'jdbc:postgresql://localhost:2222/products'
+    user: 'user'
+    password: 'pass'
+    change-log: 'classpath:/db/db_changelog.yaml'
+    test-rollback-on-update: true

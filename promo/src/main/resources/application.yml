@@ -1,0 +1,20 @@
+spring:
+  webflux:
+    base-path: /promo
+  main:
+    web-application-type: reactive
+  r2dbc:
+    pool:
+      enabled: true
+    url: 'r2dbc:postgresql://localhost:2222/promo'
+    username: 'user'
+    password: 'pass'
+  liquibase:
+    url: 'jdbc:postgresql://localhost:2222/promo'
+    user: 'user'
+    password: 'pass'
+    change-log: 'classpath:/db/db_changelog.yaml'
+    test-rollback-on-update: true
+
+server:
+  port: 8081
