@@ -63,8 +63,11 @@ public class PromoConsumer {
 
             for (ConsumerRecord<String, PromoEvent> rec : records) {
                 log.info("Received an update event for a promo {}", rec.key());
-                service.updatePromo(rec.value(), this.forceError);
-                consumer.commitAsync();
+                try {
+                    service.updatePromo(rec.value(), this.forceError);
+                } finally {
+                    consumer.commitAsync();
+                }
             }
 
         }

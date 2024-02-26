@@ -101,3 +101,11 @@ Npromo/src/main/java/com/ctw/summit/promo/configuration/PromoConfiguration.java
 init.sh,b/f/bf3de485311a96f3adb884ed6a20110983f6ccc9
 J
 init-multiple-databases.sh,f/7/f7894897f9ba2eb3fcbc1b070956271d31773899
+|
+Lproduct/src/main/java/com/ctw/summit/product/kafka/PromoEventSerializer.java,3/9/3985e6f71065172d123e5d217f5133df5bcce3d3
+{
+Kproduct/src/main/java/com/ctw/summit/product/kafka/PromoEventPublisher.java,d/f/df106a35bf0e622d17805547ba8a344c3c67c3ec
+q
+Apromo/src/main/java/com/ctw/summit/promo/kafka/PromoConsumer.java,5/f/5fda0eabd4b5fc3fd16ea2900d33babbb9df74a8
+u
+Epromo/src/main/java/com/ctw/summit/promo/kafka/PromoDeserializer.java,8/9/892778dbcbd0d78ca6a62184c8c156ce106c318a
