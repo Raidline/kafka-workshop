@@ -31,12 +31,14 @@ public class CartRepo {
                 .publishOn(Schedulers.boundedElastic())
                 .doOnNext(c -> {
                     var items = cart.get(CART_ID);
-                    synchronized (items) {
 
-                        items.add(c);
-
-                        cart.put(CART_ID, items);
+                    if (items == null) {
+                        items = new ArrayList<>();
                     }
+
+                    items.add(c);
+
+                    cart.put(CART_ID, items);
                 }).then();
     }
 

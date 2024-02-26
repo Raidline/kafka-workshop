@@ -32,11 +32,13 @@ public class PromoConsumer {
             ConsumerState.OK, () -> {
                 reconnect.set(true);
                 disconnect.compareAndExchange(true, false);
+                forceError = false;
             },
             ConsumerState.NOK, () -> forceError = true,
             ConsumerState.DISCONNECT, () -> {
                 disconnect.set(true);
                 reconnect.compareAndExchange(true, false);
+                forceError = false;
             }
     );
 
@@ -55,8 +57,10 @@ public class PromoConsumer {
 
             if (disconnect.get()) {
                 consumer.unsubscribe();
+                continue;
             } else if (reconnect.get()) {
                 consumer.subscribe(List.of(PROMO_TOPIC));
+                reconnect.compareAndExchange(true, false);
             }
 
             var records = consumer.poll(Duration.ofMillis(100L));

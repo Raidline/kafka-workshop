@@ -18,7 +18,7 @@ public class PromoEventPublisher {
 
     @Async
     public void sendEvent(int promoId, int value) {
-        try(var producer = new KafkaProducer<String, PromoEvent>(kafkaProperties)) {
+        try (var producer = new KafkaProducer<String, PromoEvent>(kafkaProperties)) {
             producer.send(new ProducerRecord<>(
                     PROMO_TOPIC,
                     String.valueOf(promoId),
