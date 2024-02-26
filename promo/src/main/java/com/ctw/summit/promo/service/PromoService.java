@@ -6,6 +6,7 @@ import com.ctw.summit.promo.model.Promo;
 import com.ctw.summit.promo.repo.PromoRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Service
@@ -29,5 +30,9 @@ public class PromoService {
                 ))
                 .flatMap(repo::save)
                 .doOnNext(p -> eventPublisher.sendEvent(p.id(), p.value()));
+    }
+
+    public Flux<Promo> getAllPromos() {
+        return repo.findAll();
     }
 }

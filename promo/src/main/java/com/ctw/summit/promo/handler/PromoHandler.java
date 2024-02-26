@@ -32,6 +32,11 @@ public class PromoHandler {
                 .body(promo, Promo.class);
     }
 
+    public Mono<ServerResponse> getAllPromos(ServerRequest serverRequest) {
+        return ServerResponse.ok()
+                .body(service.getAllPromos(), new ParameterizedTypeReference<>() {});
+    }
+
 
     public record PromoUpdate(
             int option

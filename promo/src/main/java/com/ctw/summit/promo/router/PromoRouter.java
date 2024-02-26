@@ -14,6 +14,7 @@ public class PromoRouter {
     @Bean
     public RouterFunction<ServerResponse> router(PromoHandler handler) {
         return route()
+                .GET("", handler::getAllPromos)
                 .GET("{id}", handler::getPromo)
                 .PUT("{id}", handler::updatePromo)
                 .build();
