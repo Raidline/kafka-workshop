@@ -1,15 +1,13 @@
-package com.ctw.summit.promo.configuration;
+package com.ctw.summit.product.configuration;
 
 import org.springframework.context.annotation.Configuration;
-import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.web.reactive.config.CorsRegistry;
 import org.springframework.web.reactive.config.EnableWebFlux;
 import org.springframework.web.reactive.config.WebFluxConfigurer;
 
 @Configuration
-@EnableAsync
 @EnableWebFlux
-public class PromoConfiguration implements WebFluxConfigurer {
+public class ProductConfiguration implements WebFluxConfigurer {
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
