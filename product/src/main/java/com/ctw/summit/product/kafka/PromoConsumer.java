@@ -32,11 +32,13 @@ public class PromoConsumer {
             ConsumerState.OK, () -> {
                 reconnect.set(true);
                 disconnect.compareAndExchange(true, false);
+                forceError = false;
             },
             ConsumerState.NOK, () -> forceError = true,
             ConsumerState.DISCONNECT, () -> {
                 disconnect.set(true);
                 reconnect.compareAndExchange(true, false);
+                forceError = false;
             }
     );
 
