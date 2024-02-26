@@ -54,6 +54,9 @@ public class PromoConsumer {
         while (true) {
 
             if (disconnect.get()) {
+                if(consumer.listTopics().isEmpty()) {
+                    continue;
+                }
                 consumer.unsubscribe();
             } else if (reconnect.get()) {
                 consumer.subscribe(List.of(PROMO_TOPIC));
