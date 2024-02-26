@@ -54,12 +54,11 @@ public class PromoConsumer {
         while (true) {
 
             if (disconnect.get()) {
-                if(consumer.listTopics().isEmpty()) {
-                    continue;
-                }
                 consumer.unsubscribe();
+                continue;
             } else if (reconnect.get()) {
                 consumer.subscribe(List.of(PROMO_TOPIC));
+                reconnect.compareAndExchange(true, false);
             }
 
             var records = consumer.poll(Duration.ofMillis(100L));
