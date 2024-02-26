@@ -5,6 +5,7 @@ import com.ctw.summit.promo.kafka.PromoEventPublisher;
 import com.ctw.summit.promo.model.Promo;
 import com.ctw.summit.promo.repo.PromoRepo;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -33,6 +34,6 @@ public class PromoService {
     }
 
     public Flux<Promo> getAllPromos() {
-        return repo.findAll();
+        return repo.findAll(Sort.by(Sort.Direction.ASC, "id"));
     }
 }
