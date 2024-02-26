@@ -30,4 +30,15 @@ public class PromoService {
                 .flatMap(repo::save)
                 .doOnNext(p -> eventPublisher.sendEvent(p.id(), p.value()));
     }
+
+    public Mono<Promo> rollbackPromo(int id, int value) {
+        return this.findPromo(id)
+                .map(p -> new Promo(
+                        p.id(),
+                        value,
+                        p.productId(),
+                        p.options()
+                ))
+                .flatMap(repo::save);
+    }
 }

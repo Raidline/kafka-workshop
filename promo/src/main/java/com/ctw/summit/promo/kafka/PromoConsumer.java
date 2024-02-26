@@ -1,6 +1,5 @@
 package com.ctw.summit.promo.kafka;
 
-import com.ctw.summit.promo.handler.PromoHandler;
 import com.ctw.summit.promo.service.PromoService;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
@@ -40,10 +39,9 @@ public class PromoConsumer {
             var records = consumer.poll(Duration.ofMillis(100L));
 
             for (ConsumerRecord<String, PromoEvent> rec : records) {
-                log.info("Received an update event for a promo {}", rec.key());
+                log.info("Received a rollback event for a promo {}", rec.key());
                 try {
-                    service.updatePromo(rec.value().id(),
-                            new PromoHandler.PromoUpdate(rec.value().value()))
+                    service.rollbackPromo(rec.value().id(), rec.value().value())
                             .subscribe(p -> log.info("Promo rollback {}", p.id()));
                 } finally {
                     consumer.commitAsync();
