@@ -134,11 +134,13 @@ This makes the buy not valid, because the item B is missing.
 
 Your job is to implement a mechanism that will check if the cart is valid after the update. 
 
-And rollback the update on the iteam A if it is not.
+And rollback the update on the item A if it is not.
 
 In this case there is no need to create a new topic for the error, because the error is internal.
 
 But you need to rollback the update in the cart service.
+
+**The rollback does not involve anymore the promo service.**
 
 After you done everything you should be able to see the cart service recovering from the error and updating the products in the cart again.
 
