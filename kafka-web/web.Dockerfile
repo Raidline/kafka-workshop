@@ -7,9 +7,11 @@ RUN npm install
 
 RUN npm run build
 
-FROM nginx:alpine
+FROM nginx:latest
 
 WORKDIR /app
 
 COPY --from=build /dist .
 COPY ./nginx.conf /etc/nginx/nginx.conf
+
+EXPOSE 3000
