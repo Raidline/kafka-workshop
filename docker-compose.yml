@@ -8,6 +8,15 @@ networks:
   workshop-network:
 
 services:
+  web:
+    container_name: kafka-web
+    build:
+      context: ./kafka-web
+      dockerfile: web.Dockerfile
+    networks:
+      - workshop-network
+    ports:
+      - "3000:3000"
   db:
     container_name: workshop-databases
     image: "postgres:alpine"
@@ -38,6 +47,7 @@ services:
       - "22181:2181"
 
   kafka:
+    container_name: kafka-service
     image: confluentinc/cp-kafka:latest
     depends_on:
       - zookeeper
