@@ -39,7 +39,6 @@ export class RealApi extends Api {
     }
 
     setProductKafkaStatus(status: KafkaStatus): Promise<boolean> {
-        console.log(status)
         return this.axiosInstance.post(`${this.productUrl}/kafka/${status}`)
     }
 
