@@ -47,6 +47,7 @@ services:
       - "22181:2181"
 
   kafka:
+    container_name: kafka-service
     image: confluentinc/cp-kafka:latest
     depends_on:
       - zookeeper
