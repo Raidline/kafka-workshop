@@ -19,6 +19,7 @@
     <modules>
         <module>product</module>
         <module>promo</module>
+        <module>cart</module>
     </modules>
 
     <dependencies>

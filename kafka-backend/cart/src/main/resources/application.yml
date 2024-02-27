@@ -1,0 +1,18 @@
+spring:
+  webflux:
+    base-path: /cart
+  main:
+    web-application-type: reactive
+  r2dbc:
+    pool:
+      enabled: true
+    url: 'r2dbc:postgresql://localhost:2222/cart'
+    username: 'user'
+    password: 'pass'
+  liquibase:
+    url: 'jdbc:postgresql://localhost:2222/cart'
+    user: 'user'
+    password: 'pass'
+    change-log: 'classpath:/db/db_changelog.yaml'
+    test-rollback-on-update: true
+
