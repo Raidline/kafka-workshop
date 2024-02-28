@@ -14,7 +14,6 @@ import reactor.core.publisher.Mono;
 @Slf4j
 public class PromoService {
 
-    private final CartService cartService;
     private final PromoEventPublisher promoEventPublisher;
     private final ProductService productService;
     private final PromoRepo promoRepo;
@@ -28,10 +27,7 @@ public class PromoService {
                     }
                     return promoRepo.save(new Promo(p.id(), value.value(), p.productId(), p.options()));
                 })
-                .flatMap(p -> productService.findById(p.productId())
-                        .flatMap(prod ->
-                                cartService.updateProductPrice(prod.id(), prod.value() - p.value()))
-                )
+                .flatMap(p -> productService.findById(p.productId()))
                 .subscribe(x -> log.info("Promo updated {}", x.name()), th -> {
                     log.error(th.getMessage());
 
