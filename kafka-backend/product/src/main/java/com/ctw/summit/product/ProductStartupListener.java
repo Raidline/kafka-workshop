@@ -17,8 +17,8 @@ public class ProductStartupListener implements ApplicationListener<ApplicationRe
     @Override
     public void onApplicationEvent(ApplicationReadyEvent event) {
         jobRepo.findAll()
-                .flatMap(j ->
-                        productService.updateProduct(j.productId(), j.wantedValue()))
+                .flatMap(j -> productService.updateProduct(j.productId(), j.wantedValue()))
+                .flatMap(__ -> jobRepo.deleteAll())
                 .subscribe();
     }
 }

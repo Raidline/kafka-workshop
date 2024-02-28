@@ -18,6 +18,7 @@ public class CartStartupListener implements ApplicationListener<ApplicationReady
     public void onApplicationEvent(ApplicationReadyEvent event) {
         jobRepo.findAll()
                 .flatMap(j -> cartService.updateProductPrice(j.productId(), j.wantedValue()))
+                .flatMap(__ -> jobRepo.deleteAll())
                 .subscribe();
     }
 }
