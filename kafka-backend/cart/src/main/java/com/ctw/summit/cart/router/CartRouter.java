@@ -23,6 +23,7 @@ public class CartRouter {
                                 .POST("nok", kafkaHandler::enableNok)
                                 .POST("disconnect", kafkaHandler::disconnect)))
                 .GET("cart", handler::getCart)
+                .POST("cart", handler::addToCart)
                 .POST("clear", handler::clearCart)
                 .build();
     }

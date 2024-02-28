@@ -5,6 +5,7 @@ import com.ctw.summit.product.model.Promo;
 import com.ctw.summit.product.repo.ProductRepo;
 import com.ctw.summit.product.repo.PromoRepo;
 import lombok.RequiredArgsConstructor;
+import org.reactivestreams.Publisher;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -36,6 +37,11 @@ public class ProductService {
 
     public Mono<Product> findById(int prodId) {
         return productRepo.findById(prodId);
+    }
+
+    public Mono<Product> updateProduct(int productId, int value) {
+        return productRepo.findById(productId)
+                .flatMap(p -> productRepo.save(new Product(p.id(), p.name(), value, p.related())));
     }
 
 

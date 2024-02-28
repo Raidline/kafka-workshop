@@ -1,5 +1,6 @@
 package com.ctw.summit.cart.service;
 
+import com.ctw.summit.cart.handler.CartHandler;
 import com.ctw.summit.cart.kafka.ProductEvent;
 import com.ctw.summit.cart.model.CartItem;
 import com.ctw.summit.cart.repo.CartRepo;
@@ -15,18 +16,14 @@ import reactor.core.publisher.Mono;
 public class CartService {
 
     private final CartRepo cartRepo;
-    private final PromoRepo promoRepo;
 
     public Flux<CartItem> getCart() {
         return cartRepo.getCart();
     }
 
-    public Mono<Void> addProduct(ProductEvent prod) {
-        var promoForProd = promoRepo.findByProductId(prod.id())
-                .map(p -> new Product(prod.id(), prod.name(), prod.price() - p.value()))
-                .switchIfEmpty(Mono.just(new Product(prod.id(), prod.name(), prod.price())));
-
-        return promoForProd.flatMap(cartRepo::addProduct);
+    public Mono<Void> addProduct(CartHandler.CartRequest request) {
+        return cartRepo.addProduct(
+                new Product(request.id(), request.name(), request.value()));
     }
 
     public Mono<CartItem> updateProductPrice(int prodId, int newValue) {

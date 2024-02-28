@@ -37,8 +37,9 @@ public class PromoService {
                     log.error(th.getMessage());
 
                     //store on db for later
-                    jobRepo.save(new JobRecord(promoException.id,
-                                    "promo", "update", promoException.value))
+                    jobRepo.save(new JobRecord(0,
+                                    "promo", "update", promoException.value,
+                                    promoException.id))
                             .subscribe();
                 });
     }

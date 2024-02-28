@@ -28,6 +28,19 @@ public class CartHandler {
                         .build());
     }
 
+    public Mono<ServerResponse> addToCart(ServerRequest serverRequest) {
+        var cartRequest = serverRequest.bodyToMono(CartRequest.class);
+
+        var res = cartRequest
+                .flatMap(cartService::addProduct);
+
+        return res
+                .then(ServerResponse.accepted()
+                        .build());
+    }
+
 
     public record CartResponse(String prodName, int value) {}
+
+    public record CartRequest(int id, String name, int value) {}
 }
