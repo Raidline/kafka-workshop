@@ -1,7 +1,9 @@
 package com.ctw.summit.cart.service;
 
 import com.ctw.summit.cart.kafka.PromoEvent;
+import com.ctw.summit.cart.model.JobRecord;
 import com.ctw.summit.cart.model.Promo;
+import com.ctw.summit.cart.repo.JobRepo;
 import com.ctw.summit.cart.repo.PromoRepo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,6 +17,7 @@ public class PromoService {
 
     private final CartService cartService;
     private final PromoRepo promoRepo;
+    private final JobRepo jobRepo;
 
     public void updatePromo(PromoEvent value, boolean forceError) {
 
@@ -27,7 +30,17 @@ public class PromoService {
                 })
                 .flatMap(prod ->
                         cartService.updateProductPrice(prod.id(), prod.value() - value.value()))
-                .subscribe(x -> log.info("Promo updated {}", x.name()), th -> log.error(th.getMessage()));
+                .subscribe(x -> log.info("Promo updated {}", x.name()), th -> {
+
+                    var promoException = (PromoException) th;
+
+                    log.error(th.getMessage());
+
+                    //store on db for later
+                    jobRepo.save(new JobRecord(promoException.id,
+                                    "promo", "update", promoException.value))
+                            .subscribe();
+                });
     }
 
 

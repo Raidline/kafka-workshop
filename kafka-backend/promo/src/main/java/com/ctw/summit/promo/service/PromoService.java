@@ -36,15 +36,4 @@ public class PromoService {
     public Flux<Promo> getAllPromos() {
         return repo.findAll(Sort.by(Sort.Direction.ASC, "id"));
     }
-
-    public Mono<Promo> rollbackPromo(int id, int value) {
-        return this.findPromo(id)
-                .map(p -> new Promo(
-                        p.id(),
-                        value,
-                        p.productId(),
-                        p.options()
-                ))
-                .flatMap(repo::save);
-    }
 }

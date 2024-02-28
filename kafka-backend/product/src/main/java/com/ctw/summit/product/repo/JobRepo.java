@@ -1,10 +1,9 @@
 package com.ctw.summit.product.repo;
 
-import com.ctw.summit.product.model.Promo;
+import com.ctw.summit.product.model.JobRecord;
 import org.springframework.data.repository.reactive.ReactiveCrudRepository;
 import org.springframework.stereotype.Repository;
-import reactor.core.publisher.Mono;
 
 @Repository
-public interface PromoRepo extends ReactiveCrudRepository<Promo, Integer> {
+public interface JobRepo extends ReactiveCrudRepository<JobRecord, Integer>{
 }
